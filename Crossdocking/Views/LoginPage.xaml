@@ -4,17 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Crossdocking.Views"
+             xmlns:controls="clr-namespace:Crossdocking.Views.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="250">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Username" Margin="5" HorizontalAlignment="Center"/>
-            <TextBox Text="{Binding Username}" Width="200px"/>
+            
+            <controls:LabeledControlPresenter HeaderText="Username">
+                <TextBox Text="{Binding Username}" Width="200px"/>
+            </controls:LabeledControlPresenter>
+            <controls:LabeledControlPresenter HeaderText="Password" Margin="0, 5" >
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Width="200px"/>
+            </controls:LabeledControlPresenter>
+            <controls:LabeledControlPresenter>
+                <Button Content="Login" HorizontalAlignment="Center" Command="{Binding LoginCommand}" Margin="10" Width="60px"/>
+            </controls:LabeledControlPresenter>
+            
 
-            <Label Content="Password" Margin="5" HorizontalAlignment="Center"/>
-            <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Width="200px"/>
-
-            <Button Content="Login" Command="{Binding LoginCommand}" Margin="10" Width="60px"/>
+            
+            <Label Content="{Binding ErrorMessage}" Margin="10" Height="40"></Label>
         </StackPanel>
     </Grid>
 </UserControl>

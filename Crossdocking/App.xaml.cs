@@ -16,11 +16,6 @@ namespace Crossdocking
     /// </summary>
     public partial class App : Application
     {
-
-        public App()
-        {
-        }
-
         protected override void OnStartup(StartupEventArgs e)
         {
             var services = new ServiceCollection() { };

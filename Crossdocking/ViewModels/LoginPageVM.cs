@@ -5,7 +5,6 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Crossdocking.Commands;
 using Crossdocking.Services;
 using DAL;
 
@@ -18,34 +17,14 @@ namespace Crossdocking.ViewModels
 
         private readonly NavigationService _navigationService;
 
-        private ChangeWindowSizeService _changeWindowSizeService;
+        private readonly ChangeWindowSizeService _changeWindowSizeService;
 
         private RelayCommand _loginCommand;
 
-        private string _username;
-        public string Username 
-        {
-            get => _username;
-            set
-            {
-                _username = value;
-                OnPropertyChanged(nameof(Username));
-            }
-        }
-
-        private  string _password;
-
-        public string Password
-        {
-            get => _password;
-            set
-            {
-                _password = value;
-                OnPropertyChanged(nameof(Password));
-            }
-        }
-
+        public string Username { get; set; }
+        public string Password { get; set; }
         public string ErrorMessage { get; set; }
+
         public LoginPageVM(NavigationService navigationService, ChangeWindowSizeService changeWindowSizeService)
         {
             _navigationService = navigationService;
@@ -68,7 +47,7 @@ namespace Crossdocking.ViewModels
                     }
                     else
                     {
-                        ErrorMessage = "Fuck!";
+                        ErrorMessage = "Error";
                         // Пользователь не найден, выводим сообщение об ошибке.
                     }
                 });
