@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crossdocking", "Crossdocking\Crossdocking.csproj", "{E92DB160-E666-43B0-8817-9BD425D6AF65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{E9F55BF1-BFC8-4493-A4BF-A31AA3EAA91D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseVM", "BaseVM\BaseVM.csproj", "{76593958-1B1A-4291-917D-C2B9AB9B6FD8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E92DB160-E666-43B0-8817-9BD425D6AF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E92DB160-E666-43B0-8817-9BD425D6AF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E92DB160-E666-43B0-8817-9BD425D6AF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E92DB160-E666-43B0-8817-9BD425D6AF65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9F55BF1-BFC8-4493-A4BF-A31AA3EAA91D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9F55BF1-BFC8-4493-A4BF-A31AA3EAA91D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9F55BF1-BFC8-4493-A4BF-A31AA3EAA91D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9F55BF1-BFC8-4493-A4BF-A31AA3EAA91D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76593958-1B1A-4291-917D-C2B9AB9B6FD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76593958-1B1A-4291-917D-C2B9AB9B6FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76593958-1B1A-4291-917D-C2B9AB9B6FD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76593958-1B1A-4291-917D-C2B9AB9B6FD8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F8558687-B73E-43DE-B91C-503EFEB2B936}
+	EndGlobalSection
+EndGlobal
