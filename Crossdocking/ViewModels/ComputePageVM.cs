@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Crossdocking.Services;
 using DAL;
+using Microsoft.Win32;
 
 
 namespace Crossdocking.ViewModels
@@ -20,6 +21,7 @@ namespace Crossdocking.ViewModels
         private RelayCommand _downloadFromFileCommand;
         private RelayCommand _executePlanningCommand;
         private ChangeWindowSizeService _changeWindowSizeService;
+        private ExcelParserService _excelParserService;
 
         public int CarsCount { get; set; }
         public int AverageThroughput { get; set; }
@@ -52,7 +54,7 @@ namespace Crossdocking.ViewModels
             {
                 return _showInformationCommand ??= new RelayCommand(o =>
                 {
-                   
+
                 });
             }
         }
@@ -63,7 +65,10 @@ namespace Crossdocking.ViewModels
             {
                 return _downloadFromFileCommand ??= new RelayCommand(o =>
                 {
-                    
+                    OpenFileDialog openFile = new OpenFileDialog();
+                    openFile.ShowDialog();
+                    _excelParserService = new ExcelParserService(openFile.FileName);
+                    _excelParserService.ParseExcelFile();
                 });
             }
         }
