@@ -25,6 +25,7 @@ namespace Crossdocking
             services.AddSingleton<MainWindow, MainWindow>();
             services.AddSingleton<ChangeWindowSizeService, ChangeWindowSizeService>();
             services.AddTransient<LoginPageVM, LoginPageVM>();
+            services.AddTransient<AdminPageVM, AdminPageVM>();
             services.AddTransient<ComputePageVM, ComputePageVM>();
 
             var serviceProvider = services.BuildServiceProvider();

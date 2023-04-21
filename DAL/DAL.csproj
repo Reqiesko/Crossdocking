@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Databases\Users.db">
+    <None Update="Databases\DataBase.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

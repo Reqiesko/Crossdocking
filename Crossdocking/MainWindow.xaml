@@ -7,8 +7,8 @@
         xmlns:vm="clr-namespace:Crossdocking.ViewModels"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="Login" Height="300" Width="300">
-
+        Title="Login" Height="440" Width="420" ResizeMode="NoResize">
+        
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vm:LoginPageVM}">
@@ -19,13 +19,15 @@
             </DataTemplate>
         </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"></ContentControl>
         <ui:TitleBar
             Title="ПРИЛОЖЕНИЕ"
-            Grid.Row="0">
+            Grid.Row="0"
+            Height="45"
+            MaxHeight="45">
             <ui:TitleBar.Tray>
                 <ui:NotifyIcon
                     FocusOnLeftClick="True"

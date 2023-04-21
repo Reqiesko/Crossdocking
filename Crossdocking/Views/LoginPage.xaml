@@ -19,9 +19,6 @@
             <controls:LabeledControlPresenter>
                 <Button Content="Login" HorizontalAlignment="Center" Command="{Binding LoginCommand}" Margin="10" Width="60px"/>
             </controls:LabeledControlPresenter>
-            
-
-            
             <Label Content="{Binding ErrorMessage}" Margin="10" Height="40"></Label>
         </StackPanel>
     </Grid>

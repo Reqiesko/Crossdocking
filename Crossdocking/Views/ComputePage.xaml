@@ -4,9 +4,124 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Crossdocking.Views"
+             xmlns:controls="clr-namespace:Crossdocking.Views.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="370" d:DesignWidth="420">
+    <Grid HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <controls:LabeledControlPresenter
+            Grid.Column="0" 
+            Grid.Row="0" 
+            Grid.ColumnSpan="2">
+            <Menu>
+                <MenuItem Command="{Binding ShowInformationCommand}"
+                          Header="Справочная информация" />
+                <MenuItem Command="{Binding BackToLoginPageCommand}"
+                          Header="Выйти из учетной записи"/>
+            </Menu>
+        </controls:LabeledControlPresenter>
 
+        <Label 
+            Grid.Column="0"
+            Grid.Row="1"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center">
+            Количество машин
+        </Label>
+        <TextBox 
+            Grid.Column="1"
+            Grid.Row="1"
+            HorizontalAlignment="Left"
+            MinWidth="250"
+            Margin="0, 10"
+            Text="{Binding CarsCount}"/>
+
+        <Label
+            Grid.Column="0"
+            Grid.Row="2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center">
+            Пропускная способность
+        </Label>
+        <TextBox 
+            Grid.Column="1" 
+            Grid.Row="2"
+            HorizontalAlignment="Left"
+            MinWidth="250"
+            Margin="0, 10"
+            Text="{Binding AverageThroughput}"/>
+
+        <Label 
+            Grid.Column="0" 
+            Grid.Row="3"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center">
+            Количество погрузчиков
+        </Label>
+        <TextBox 
+            Grid.Column="1"
+            Grid.Row="3"
+            HorizontalAlignment="Left"
+            MinWidth="250"
+            Margin="0, 10"
+            Text="{Binding LoaderCount}"/>
+
+        <Label 
+            Grid.Column="0"
+            Grid.Row="4" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center">
+            Количество конвеерных лент
+        </Label>
+        <TextBox 
+            Grid.Column="1"
+            Grid.Row="4"
+            HorizontalAlignment="Left"
+            MinWidth="250"
+            Margin="0, 10"
+            Text="{Binding BeltCount}"/>
+
+        <Label 
+            Grid.Column="0"
+            Grid.Row="5"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center">
+            Количество типов товаров
+        </Label>
+        <TextBox 
+            Grid.Column="1"
+            Grid.Row="5"
+            HorizontalAlignment="Left"
+            MinWidth="250"
+            Margin="0, 10"
+            Text="{Binding ProductCount}"/>
+
+        <Button 
+            Grid.Column="0"
+            Grid.Row="6"
+            Content="Download from file"
+            Margin="10, 10"
+            Command="{Binding DownloadFromFileCommand}"
+            />
+        <Button 
+            Grid.Column="1"
+            Grid.Row="6" 
+            Content="Execute"
+            HorizontalAlignment="Center"
+            Margin="0, 10"
+            Command="{Binding ExecutePlanningCommand}"
+            />
     </Grid>
 </UserControl>
