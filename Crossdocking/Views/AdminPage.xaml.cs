@@ -18,7 +18,7 @@ namespace Crossdocking.Views
     /// <summary>
     /// Логика взаимодействия для AdminPage.xaml
     /// </summary>
-    public partial class AdminPage : Page
+    public partial class AdminPage : UserControl
     {
         public AdminPage()
         {

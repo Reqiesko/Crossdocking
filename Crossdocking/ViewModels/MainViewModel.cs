@@ -13,7 +13,7 @@ namespace Crossdocking.ViewModels
     public class MainViewModel : BaseVM.ViewModelBase
     {
         private readonly NavigationService _navigationService;
-        
+
         public ViewModelBase CurrentViewModel => _navigationService.CurrentViewModel;
 
         public MainViewModel(NavigationService service)

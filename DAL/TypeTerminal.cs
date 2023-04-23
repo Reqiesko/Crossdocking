@@ -11,6 +11,6 @@ namespace DAL
         public int Id { get; set; }
         public int MinGates { get; set; }
         public int MaxGates { get; set; }
-        public int FormGates { get; set; }
+        //public int FormGates { get; set; }
     }
 }

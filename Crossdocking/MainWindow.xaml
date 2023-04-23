@@ -7,7 +7,9 @@
         xmlns:vm="clr-namespace:Crossdocking.ViewModels"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="Login" Height="440" Width="420" ResizeMode="NoResize">
+        Title="Login"
+        WindowState="Normal"
+        ResizeMode="NoResize">
         
     <Grid>
         <Grid.Resources>
@@ -16,6 +18,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:ComputePageVM}">
                 <views:ComputePage/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AdminPageVM}">
+                <views:AdminPage/>
             </DataTemplate>
         </Grid.Resources>
         <Grid.RowDefinitions>

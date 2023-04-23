@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Crossdocking.Views"
              xmlns:controls="clr-namespace:Crossdocking.Views.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="370" d:DesignWidth="420">
-    <Grid HorizontalAlignment="Center">
+             mc:Ignorable="d">
+
+    <Grid HorizontalAlignment="Left">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
@@ -24,7 +24,7 @@
         <controls:LabeledControlPresenter
             Grid.Column="0" 
             Grid.Row="0" 
-            Grid.ColumnSpan="2">
+            Grid.ColumnSpan="2" HorizontalAlignment="Left">
             <Menu>
                 <MenuItem Command="{Binding ShowInformationCommand}"
                           Header="Справочная информация" />

@@ -17,19 +17,16 @@ namespace Crossdocking.ViewModels
 
         private readonly NavigationService _navigationService;
 
-        private readonly ChangeWindowSizeService _changeWindowSizeService;
-
         private RelayCommand _loginCommand;
 
         public string Username { get; set; }
         public string Password { get; set; }
         public string ErrorMessage { get; set; }
 
-        public LoginPageVM(NavigationService navigationService, ChangeWindowSizeService changeWindowSizeService)
+        public LoginPageVM(NavigationService navigationService)
         {
             _navigationService = navigationService;
             _dbContext = new AppDbContext();
-            _changeWindowSizeService = changeWindowSizeService;
         }
 
         public RelayCommand LoginCommand
@@ -42,7 +39,6 @@ namespace Crossdocking.ViewModels
                     if (user is { Role: "user" })
                     {
                         // Пользователь найден, выполняем необходимые действия, например, переходим на главную страницу приложения.
-                        _changeWindowSizeService.ChangeSize(600, 600);
                         _navigationService.CurrentViewModel = new ComputePageVM(_navigationService);
                     }
                     else if (user is { Role: "admin" })
