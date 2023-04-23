@@ -20,7 +20,6 @@ namespace Crossdocking.ViewModels
         private RelayCommand _backToLoginPageCommand;
         private RelayCommand _downloadFromFileCommand;
         private RelayCommand _executePlanningCommand;
-        private ChangeWindowSizeService _changeWindowSizeService;
         private ExcelParserService _excelParserService;
 
         public int CarsCount { get; set; }
@@ -43,7 +42,7 @@ namespace Crossdocking.ViewModels
             {
                 return _backToLoginPageCommand ??= new RelayCommand(o =>
                 {
-                    _navigationService.CurrentViewModel = new LoginPageVM(_navigationService, _changeWindowSizeService);
+                    _navigationService.CurrentViewModel = new LoginPageVM(_navigationService);
                 });
             }
         }

@@ -23,7 +23,6 @@ namespace Crossdocking
             services.AddSingleton<NavigationService, NavigationService>();
             services.AddSingleton<MainViewModel, MainViewModel>();
             services.AddSingleton<MainWindow, MainWindow>();
-            services.AddSingleton<ChangeWindowSizeService, ChangeWindowSizeService>();
             services.AddSingleton<ExcelParserService, ExcelParserService>();
             services.AddTransient<LoginPageVM, LoginPageVM>();
             services.AddTransient<AdminPageVM, AdminPageVM>();

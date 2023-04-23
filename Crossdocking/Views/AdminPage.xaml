@@ -56,7 +56,8 @@
                   Width="auto"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
-                  Margin="5,10,5,0">
+                  Margin="5,10,5,0"
+                  x:Name="ContractsList">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path=Id}" Width="110"/>
                 <DataGridTextColumn Header="Средняя пропускная способность" Binding="{Binding Path=AverageThroughput}" Width="230"/>
@@ -65,16 +66,12 @@
                 <DataGridTextColumn Header="Название компании" Binding="{Binding Path=CompanyName}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <!--public int AverageThroughput { get; set; }
-        public int MaxCarCount { get; set; }
-        public int RegularityOfDeliveries { get; set; }
-        public string CompanyName { get; set; }-->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,1,0" Width="Auto">
             <Grid Width="Auto">
                 <Button Content="Удалить" Margin="338,10,10,10" Command="{Binding DeleteCommand}"
-                        CommandParameter="{Binding SelectedItem, ElementName=booksList}"  />
+                        CommandParameter="{Binding SelectedItem, ElementName=ContractsList}"  />
                 <Button Content="Изменить" Margin="174,10" Command="{Binding EditCommand}"
-                        CommandParameter="{Binding SelectedItem, ElementName=booksList}"  />
+                        CommandParameter="{Binding SelectedItem, ElementName=ContractsList}"  />
                 <Button Content="Добавить" Margin="10,10,338,10" Command="{Binding AddCommand}"  />
             </Grid>
         </StackPanel>
