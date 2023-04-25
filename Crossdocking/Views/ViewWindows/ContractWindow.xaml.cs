@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DAL;
 
-namespace Crossdocking.Views
+namespace Crossdocking.Views.ViewWindows
 {
     /// <summary>
     /// Логика взаимодействия для ContractWindow.xaml

@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class User
+    public class User : EntityBase
     {
-        public int Id { get; set; }
-
         [Required]
         [StringLength(50)]
         public string Username { get; set; }
@@ -20,6 +18,8 @@ namespace DAL
         [StringLength(50)]
         public string Password { get; set; }
 
+        [Required]
+        [StringLength(50)]
         public string Role { get; set; }
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class TypeTerminal
+    public class TypeTerminal : EntityBase
     {
-        public int Id { get; set; }
+        public string Name { get; set; }
         public int MinGates { get; set; }
         public int MaxGates { get; set; }
-        //public int FormGates { get; set; }
+        public string FormTerminal { get; set; }
     }
 }

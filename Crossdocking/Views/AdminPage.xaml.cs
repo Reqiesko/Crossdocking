@@ -20,9 +20,84 @@ namespace Crossdocking.Views
     /// </summary>
     public partial class AdminPage : UserControl
     {
+        private enum Tables
+        {
+            ContractsTable,
+            TerminalsTable,
+            TypeTerminalsTable,
+            UsersTable,
+        }
+
+        private Tables CurrentTable { get; set; }
+
+        private DataGrid CurrentGrid { get; set; }
+
         public AdminPage()
         {
             InitializeComponent();
+            CurrentTable = new Tables();
+            CurrentTable = Tables.ContractsTable;
+            CurrentGrid = ContractsGrid;
+        }
+
+        public void ShowContractsTableCommand(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (CurrentTable == Tables.ContractsTable)
+            {
+                return;
+            }
+            else
+            {
+                CurrentGrid.Visibility = Visibility.Hidden;
+                CurrentTable = Tables.ContractsTable;
+                CurrentGrid = ContractsGrid;
+                CurrentGrid.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ShowTerminalsTableCommand(object sender, RoutedEventArgs e)
+        {
+            if (CurrentTable == Tables.TerminalsTable)
+            {
+                return;
+            }
+            else
+            {
+                CurrentGrid.Visibility = Visibility.Hidden;
+                CurrentTable = Tables.TerminalsTable;
+                CurrentGrid = TerminalsGrid;
+                CurrentGrid.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ShowTypeTerminalsTableCommand(object sender, RoutedEventArgs e)
+        {
+            if (CurrentTable == Tables.TypeTerminalsTable)
+            {
+                return;
+            }
+            else
+            {
+                CurrentGrid.Visibility = Visibility.Hidden;
+                CurrentTable = Tables.TypeTerminalsTable;
+                CurrentGrid = TypeTerminalsGrid;
+                CurrentGrid.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ShowUsersTableCommand(object sender, RoutedEventArgs e)
+        {
+            if (CurrentTable == Tables.UsersTable)
+            {
+                return;
+            }
+            else
+            {
+                CurrentGrid.Visibility = Visibility.Hidden;
+                CurrentTable = Tables.UsersTable;
+                CurrentGrid = UsersGrid;
+                CurrentGrid.Visibility = Visibility.Visible;
+            }
         }
     }
 }

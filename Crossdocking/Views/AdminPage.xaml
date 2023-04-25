@@ -32,34 +32,11 @@
                           Header="Выйти из учетной записи"/>
             </Menu>
         </controls:LabeledControlPresenter>
-        <!--<controls:LabeledControlPresenter
-            Grid.Column="0" 
-            Grid.Row="1" 
-            Grid.ColumnSpan="2">
-            <Menu>
-                <Grid Width="890">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <MenuItem Grid.Column="0" Command="{Binding ShowContractsTableCommand}"
-                              Header="Contracts" 
-                              HorizontalAlignment="Center"/>
-                    <MenuItem Grid.Column="1" Command="{Binding ShowTerminalsTableCommand}"
-                              Header="Terminals"
-                              HorizontalAlignment="Center"/>
-                    <MenuItem Grid.Column="2" Command="{Binding ShowTypeTerminalsTableCommand}"
-                              Header="TypeTerminals"
-                              HorizontalAlignment="Center"/>
-                </Grid>
-            </Menu>
-        </controls:LabeledControlPresenter>-->
         <!--Add Button-->
         <Button Grid.Row="1" Style="{StaticResource addButton}" Command="{Binding AddCommand}">
             <StackPanel Orientation="Horizontal">
                 <iconPacks:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
-                <TextBlock Text="Add New Member"/>
+                <TextBlock Text="{Binding AddNewNoteText}"/>
             </StackPanel>
         </Button>
 
@@ -68,9 +45,10 @@
 
         <!--Tab buttons-->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 10 0 0">
-            <Button Style="{StaticResource tabButton}" Command="{Binding ShowContractsTableCommand}" Content="Contracts" BorderBrush="#784FF2"/>
-            <Button Style="{StaticResource tabButton}" Command="{Binding ShowTerminalsTableCommand}" Content="Terminals"/>
-            <Button Style="{StaticResource tabButton}" Command="{Binding ShowTypeTerminalsTableCommand}" Content="TypeTerminals"/>
+            <Button Style="{StaticResource tabButton}" Click="ShowContractsTableCommand" Command="{Binding ContractChangeAddCommand}" Content="Contracts" BorderBrush="#784FF2"/>
+            <Button Style="{StaticResource tabButton}" Click="ShowTerminalsTableCommand" Command="{Binding TerminalChangeAddCommand}" Content="Terminals"/>
+            <Button Style="{StaticResource tabButton}" Click="ShowTypeTerminalsTableCommand" Command="{Binding TypeTerminalChangeAddCommand}" Content="TypeTerminals"/>
+            <Button Style="{StaticResource tabButton}" Click="ShowUsersTableCommand" Command="{Binding UserChangeAddCommand}" Content="Users"/>
         </StackPanel>
 
         <!--Counter Title-->
@@ -88,14 +66,16 @@
         </Grid>
 
         <!--Members Data Grid-->
+        <!--Contracts Data Grid-->
         <DataGrid 
             Grid.Row="4"
             RowStyle="{DynamicResource DataGridRowStyle1}"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
             CellStyle="{DynamicResource DataGridCellStyle1}"
-            x:Name="membersDataGrid"
             Style="{DynamicResource DataGridStyle1}"
-            ItemsSource="{Binding Contracts}">
+            ItemsSource="{Binding Contracts}"
+            x:Name="ContractsGrid"
+            Visibility="Visible">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Номер заказа" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -112,10 +92,18 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}" CommandParameter="{Binding}" Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+                                <Button Style="{StaticResource gridEditButton}"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.EditContractCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type UserControl}}}">
                                     <iconPacks:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
-                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}"  Command="{Binding DeleteCommand}">
+                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.DeleteContractCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type UserControl}}}">
                                     <iconPacks:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
                             </StackPanel>
@@ -124,53 +112,148 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <!--<DataGrid Grid.Row="2"
-                  ItemsSource="{Binding Contracts}"
-                  HorizontalAlignment="Left"
-                  Height="auto"
-                  VerticalAlignment="Top"
-                  Width="auto"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  Margin="5,10,5,0"
-                  x:Name="ContractsList">
+
+
+        <!--Terminal Data Grid-->
+        <DataGrid 
+            Grid.Row="4"
+            RowStyle="{DynamicResource DataGridRowStyle1}"
+            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+            CellStyle="{DynamicResource DataGridCellStyle1}"
+            Style="{DynamicResource DataGridStyle1}"
+            ItemsSource="{Binding Terminals}"
+            Visibility="Hidden"
+            x:Name="TerminalsGrid">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Номер заказа" CanUserResize="True" Width="auto">
+                <DataGridTemplateColumn Header="Номер terminal" IsReadOnly="True" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Id}" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="CountGates" Binding="{Binding Path=CountGates}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="CountLoader" Binding="{Binding Path=CountLoader}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="CountProduct" Binding="{Binding Path=CountProduct}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="CountBelt" Binding="{Binding Path=CountBelt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*"/>
+                <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0">
-                                    <TextBlock Text="..." VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                </Border>
-                                <TextBlock Text="..." VerticalAlignment="Center"/>
+                                <Button Style="{StaticResource gridEditButton}"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.EditTerminalCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type UserControl}}}">
+                                    <iconPacks:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.DeleteTerminalCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type UserControl}}}">
+                                    <iconPacks:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
-                <DataGridTextColumn Header="Средняя пропускная способность" IsReadOnly="True" CanUserResize="False" Width="auto"/>
-                <DataGridTextColumn Header="Средняя пропускная способность" IsReadOnly="True" CanUserResize="False" Width="auto"/>
-                <DataGridTextColumn Header="Средняя пропускная способность" IsReadOnly="True" CanUserResize="False" Width="auto"/>
-                <DataGridTextColumn Header="Средняя пропускная способность" IsReadOnly="True" CanUserResize="False" Width="auto"/>
             </DataGrid.Columns>
-            
-            --><!--<DataGrid.Columns>
-                <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path=Id}" Width="110"/>
-                <DataGridTextColumn Header="Средняя пропускная способность" Binding="{Binding Path=AverageThroughput}" Width="230"/>
-                <DataGridTextColumn Header="Максимальное количество машин" Binding="{Binding Path=MaxCarCount}" Width="230"/>
-                <DataGridTextColumn Header="Регулярность поставок" Binding="{Binding Path=RegularityOfDeliveries}" Width="160"/>
-                <DataGridTextColumn Header="Название компании" Binding="{Binding Path=CompanyName}" Width="*"/>
-            </DataGrid.Columns>--><!--
-        </DataGrid>-->
-        <!--<StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,1,0" Width="Auto">
-            <Grid Width="Auto">
-                <Button Content="Удалить" Margin="338,10,10,10" Command="{Binding DeleteCommand}"
-                        CommandParameter="{Binding SelectedItem, ElementName=ContractsList}"  />
-                <Button Content="Изменить" Margin="174,10" Command="{Binding EditCommand}"
-                        CommandParameter="{Binding SelectedItem, ElementName=ContractsList}"  />
-                <Button Content="Добавить" Margin="10,10,338,10" Command="{Binding AddCommand}"  />
-            </Grid>
-        </StackPanel>-->
-        
+        </DataGrid>
+
+
+        <!--TypeTerminal Data Grid-->
+        <DataGrid 
+            Grid.Row="4"
+            Visibility="Hidden"
+            RowStyle="{DynamicResource DataGridRowStyle1}"
+            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+            CellStyle="{DynamicResource DataGridCellStyle1}"
+            Style="{DynamicResource DataGridStyle1}"
+            ItemsSource="{Binding TypeTerminals}"
+            x:Name="TypeTerminalsGrid">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Id" IsReadOnly="True" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Id}" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="MinGates" Binding="{Binding Path=MinGates}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="MaxGates" Binding="{Binding Path=MaxGates}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="FormTerminal" Binding="{Binding Path=FormTerminal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*"/>
+                <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource gridEditButton}"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.EditTypeTerminalCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type UserControl}}}">
+                                    <iconPacks:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" 
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.DeleteTypeTerminalCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type UserControl}}}">
+                                    <iconPacks:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <!--User Data Grid-->
+        <DataGrid 
+            Grid.Row="4"
+            Visibility="Hidden"
+            RowStyle="{DynamicResource DataGridRowStyle1}"
+            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+            CellStyle="{DynamicResource DataGridCellStyle1}"
+            Style="{DynamicResource DataGridStyle1}"
+            ItemsSource="{Binding Users}"
+            x:Name="UsersGrid">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Id" IsReadOnly="True" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Id}" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Username" Binding="{Binding Path=Username}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Password" Binding="{Binding Path=Password}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Role" Binding="{Binding Path= Role}" IsReadOnly="True" Width="*"/>
+                <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource gridEditButton}"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.EditUserCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type UserControl}}}">
+                                    <iconPacks:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.DeleteUserCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type UserControl}}}">
+                                    <iconPacks:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

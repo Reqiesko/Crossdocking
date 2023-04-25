@@ -8,19 +8,11 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class Contract : INotifyPropertyChanged
+    public class Contract : EntityBase
     {
-        public int Id { get; set; }
         public int AverageThroughput { get; set; }
         public int MaxCarCount { get; set; }
         public int RegularityOfDeliveries { get; set; }
         public string CompanyName { get; set; }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

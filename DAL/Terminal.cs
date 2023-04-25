@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class Terminal
+    public class Terminal : EntityBase
     {
-        public int Id { get; set; }
         public int CountGates { get; set; }
         public int CountLoader { get; set; }
         public int CountProduct { get; set; }
