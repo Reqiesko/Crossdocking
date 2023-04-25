@@ -12,6 +12,46 @@
              d:DataContext="{d:DesignInstance viewModels:AdminPageVM}">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        
+        <DataTemplate x:Key="ContractTemplate" >
+            <DataGrid 
+            RowStyle="{DynamicResource DataGridRowStyle1}"
+            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+            CellStyle="{DynamicResource DataGridCellStyle1}"
+            x:Name="membersDataGrid"
+            Style="{DynamicResource DataGridStyle1}"
+            ItemsSource="{Binding CurrentContext}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Номер заказа" IsReadOnly="True" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Id}" VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Средняя пропускная способность" Binding="{Binding Path=AverageThroughput}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Максимальное количество машин" Binding="{Binding Path=MaxCarCount}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Регулярность поставок" Binding="{Binding Path=RegularityOfDeliveries}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Название компании" Binding="{Binding Path=CompanyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*"/>
+                    <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource gridEditButton}" CommandParameter="{Binding}" Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+                                        <iconPacks:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                    </Button>
+                                    <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}"  Command="{Binding DeleteCommand}">
+                                        <iconPacks:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DataTemplate>
+        <controls:ContextDataTemplateSelector x:Key="ContextDataTemplateSelector"
+                                              ContractTemplate="{StaticResource ContractTemplate}"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -86,16 +126,16 @@
 
             <TextBox Name="textBoxFilter" Style="{StaticResource filterTextBox}"/>
         </Grid>
-
+        <DataGrid Grid.Row="4" ItemsSource="{Binding Contracts}" ItemTemplateSelector="{StaticResource ContextDataTemplateSelector}"></DataGrid>
         <!--Members Data Grid-->
-        <DataGrid 
+        <!--<DataGrid 
             Grid.Row="4"
             RowStyle="{DynamicResource DataGridRowStyle1}"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
             CellStyle="{DynamicResource DataGridCellStyle1}"
             x:Name="membersDataGrid"
             Style="{DynamicResource DataGridStyle1}"
-            ItemsSource="{Binding Contracts}">
+            ItemsSource="{Binding CurrentContext}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Номер заказа" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -123,7 +163,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
-        </DataGrid>
+        </DataGrid>-->
         <!--<DataGrid Grid.Row="2"
                   ItemsSource="{Binding Contracts}"
                   HorizontalAlignment="Left"

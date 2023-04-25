@@ -20,6 +20,8 @@ namespace Crossdocking.ViewModels
         public ObservableCollection<Terminal> Terminals { get; set; }
         public ObservableCollection<TypeTerminal> TypeTerminals { get; set; }
 
+        public object CurrentContext { get; set; }
+
         private RelayCommand _addCommand;
         private RelayCommand _deleteCommand;
         private RelayCommand _editCommand;
@@ -27,6 +29,7 @@ namespace Crossdocking.ViewModels
         public AdminPageVM()
         {
             _dbContext = new AppDbContext();
+            
             try
             {
                 _dbContext.Contracts.Load();
@@ -36,6 +39,7 @@ namespace Crossdocking.ViewModels
                 Contracts = _dbContext.Contracts.Local.ToObservableCollection();
                 Terminals = _dbContext.Terminals.Local.ToObservableCollection();
                 TypeTerminals = _dbContext.TypeTerminals.Local.ToObservableCollection();
+                CurrentContext = Contracts;
             }
             catch { }
         }
