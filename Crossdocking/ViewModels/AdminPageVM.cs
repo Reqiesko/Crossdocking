@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,9 @@ namespace Crossdocking.ViewModels
     {
         private readonly AppDbContext _dbContext;
 
-        public IEnumerable<Contract> Contracts { get; set; }
-        public IEnumerable<Terminal> Terminals { get; set; }
-        public IEnumerable<TypeTerminal> TypeTerminals { get; set; }
+        public ObservableCollection<Contract> Contracts { get; set; }
+        public ObservableCollection<Terminal> Terminals { get; set; }
+        public ObservableCollection<TypeTerminal> TypeTerminals { get; set; }
 
         private RelayCommand _addCommand;
         private RelayCommand _deleteCommand;
@@ -32,9 +33,9 @@ namespace Crossdocking.ViewModels
                 _dbContext.Terminals.Load();
                 _dbContext.TypeTerminals.Load();
 
-                Contracts = _dbContext.Contracts.Local.ToBindingList();
-                Terminals = _dbContext.Terminals.Local.ToBindingList();
-                TypeTerminals = _dbContext.TypeTerminals.Local.ToBindingList();
+                Contracts = _dbContext.Contracts.Local.ToObservableCollection();
+                Terminals = _dbContext.Terminals.Local.ToObservableCollection();
+                TypeTerminals = _dbContext.TypeTerminals.Local.ToObservableCollection();
             }
             catch { }
         }
@@ -71,9 +72,8 @@ namespace Crossdocking.ViewModels
             {
                 return _editCommand ??= new RelayCommand((selectedItem) =>
                 {
-                    if (selectedItem == null) return;
+                    //if (selectedItem == null) return;
                     Contract contract = selectedItem as Contract;
-
                     Contract con = new Contract()
                     {
                         Id = contract.Id,

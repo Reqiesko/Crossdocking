@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0-preview.3.23174.2" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>

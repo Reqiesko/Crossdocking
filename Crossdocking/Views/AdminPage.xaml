@@ -6,8 +6,10 @@
              xmlns:local="clr-namespace:Crossdocking.Views"
              xmlns:controls="clr-namespace:Crossdocking.Views.Controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:viewModels="clr-namespace:Crossdocking.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="890">
+             d:DesignHeight="500" d:DesignWidth="890"
+             d:DataContext="{d:DesignInstance viewModels:AdminPageVM}">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
@@ -54,7 +56,7 @@
             </Menu>
         </controls:LabeledControlPresenter>-->
         <!--Add Button-->
-        <Button Grid.Row="1" Style="{StaticResource addButton}">
+        <Button Grid.Row="1" Style="{StaticResource addButton}" Command="{Binding AddCommand}">
             <StackPanel Orientation="Horizontal">
                 <iconPacks:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
                 <TextBlock Text="Add New Member"/>
@@ -66,9 +68,9 @@
 
         <!--Tab buttons-->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 10 0 0">
-            <Button Style="{StaticResource tabButton}" Content="Club staff" BorderBrush="#784FF2"/>
-            <Button Style="{StaticResource tabButton}" Content="Players"/>
-            <Button Style="{StaticResource tabButton}" Content="Archived"/>
+            <Button Style="{StaticResource tabButton}" Command="{Binding ShowContractsTableCommand}" Content="Contracts" BorderBrush="#784FF2"/>
+            <Button Style="{StaticResource tabButton}" Command="{Binding ShowTerminalsTableCommand}" Content="Terminals"/>
+            <Button Style="{StaticResource tabButton}" Command="{Binding ShowTypeTerminalsTableCommand}" Content="TypeTerminals"/>
         </StackPanel>
 
         <!--Counter Title-->
@@ -86,32 +88,34 @@
         </Grid>
 
         <!--Members Data Grid-->
-        <DataGrid Grid.Row="4" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" x:Name="membersDataGrid" Style="{DynamicResource DataGridStyle1}">
+        <DataGrid 
+            Grid.Row="4"
+            RowStyle="{DynamicResource DataGridRowStyle1}"
+            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+            CellStyle="{DynamicResource DataGridCellStyle1}"
+            x:Name="membersDataGrid"
+            Style="{DynamicResource DataGridStyle1}"
+            ItemsSource="{Binding Contracts}">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Member" IsReadOnly="True" Width="*">
+                <DataGridTemplateColumn Header="Номер заказа" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="{Binding BgColor}">
-                                    <TextBlock Text="{Binding Character}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
-                                </Border>
-
-                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-                            </StackPanel>
+                            <TextBlock Text="{Binding Path=Id}" VerticalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Position" Binding="{Binding Position}" IsReadOnly="True" Width="*"/>
-                <DataGridTextColumn Header="Email Address" Binding="{Binding Email}" IsReadOnly="True" Width="*"/>
-                <DataGridTextColumn Header="Phone Number" Binding="{Binding Phone}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Средняя пропускная способность" Binding="{Binding Path=AverageThroughput}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Максимальное количество машин" Binding="{Binding Path=MaxCarCount}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Регулярность поставок" Binding="{Binding Path=RegularityOfDeliveries}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Название компании" Binding="{Binding Path=CompanyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*"/>
                 <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}">
+                                <Button Style="{StaticResource gridEditButton}" CommandParameter="{Binding}" Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                                     <iconPacks:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
-                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}">
+                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}"  Command="{Binding DeleteCommand}">
                                     <iconPacks:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
                             </StackPanel>
