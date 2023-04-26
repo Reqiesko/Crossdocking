@@ -23,7 +23,7 @@ namespace Crossdocking.ViewModels
         private ExcelParserService _excelParserService;
 
         public int CarsCount { get; set; }
-        public int AverageThroughput { get; set; }
+        public double AverageThroughput { get; set; }
         public bool RegularityOfDeliveries { get; set; }
         public int LoaderCount { get; set; }
         public int BeltCount { get; set; }
@@ -68,6 +68,8 @@ namespace Crossdocking.ViewModels
                     openFile.ShowDialog();
                     _excelParserService = new ExcelParserService(openFile.FileName);
                     _excelParserService.ParseExcelFile();
+                    GetMaxCarsCount();
+                    GetAverageThroughput();
                 });
             }
         }
@@ -81,6 +83,36 @@ namespace Crossdocking.ViewModels
                     
                 });
             }
+        }
+
+        public void GetMaxCarsCount()
+        {
+            Dictionary<DateTime, int> deliveriesInDay = new Dictionary<DateTime, int>();
+            for (int i = 0; i < _excelParserService.Date.Count; i++)
+            {
+                if (deliveriesInDay.TryAdd(_excelParserService.Date[i], 1))
+                {
+                    continue;
+                }
+                else
+                {
+                    deliveriesInDay[_excelParserService.Date[i]]++;
+                }
+            }
+
+            CarsCount = deliveriesInDay.Values.Max();
+            //_excelParserService.
+        }
+        
+        public void GetAverageThroughput()
+        {
+            AverageThroughput = _excelParserService.Weight.Average();
+            //_excelParserService.
+        }
+
+        public void GetCategoriesProductCount()
+        {
+            ProductCount = _excelParserService.ProductCategories.Count - _excelParserService.ProductTypes["Нескоропортящиеся"];
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Crossdocking.Services;
 using Crossdocking.Views.ViewWindows;
 using DAL;
 using Microsoft.EntityFrameworkCore;
@@ -21,9 +22,13 @@ namespace Crossdocking.ViewModels
         public ObservableCollection<TypeTerminal> TypeTerminals { get; set; }
         public ObservableCollection<User> Users { get; set; }
 
-        public object AddCommand { get; set; }
+        private readonly NavigationService _navigationService;
 
+        public object AddCommand { get; set; }
         public string AddNewNoteText { get; set; }
+
+        private RelayCommand _showInformationCommand;
+        private RelayCommand _backToLoginPageCommand;
 
         private RelayCommand _addContractCommand;
         private RelayCommand _deleteContractCommand;
@@ -46,9 +51,10 @@ namespace Crossdocking.ViewModels
         private RelayCommand _typeTerminalChangeAddCommand;
         private RelayCommand _userChangeAddCommand;
 
-        public AdminPageVM()
+        public AdminPageVM(NavigationService navigationService)
         {
             _dbContext = new AppDbContext();
+            _navigationService = navigationService;
             try
             {
                 _dbContext.Contracts.Load();
@@ -64,6 +70,28 @@ namespace Crossdocking.ViewModels
                 AddCommand = AddContractCommand;
             }
             catch { }
+        }
+
+        public RelayCommand BackToLoginPageCommand
+        {
+            get
+            {
+                return _backToLoginPageCommand ??= new RelayCommand(o =>
+                {
+                    _navigationService.CurrentViewModel = new LoginPageVM(_navigationService);
+                });
+            }
+        }
+
+        public RelayCommand ShowInformationCommand
+        {
+            get
+            {
+                return _showInformationCommand ??= new RelayCommand(o =>
+                {
+
+                });
+            }
         }
 
         #region ChangeAddCommands
@@ -555,4 +583,3 @@ namespace Crossdocking.ViewModels
         #endregion
     }
 }
-

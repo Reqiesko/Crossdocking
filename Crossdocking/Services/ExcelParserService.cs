@@ -18,8 +18,7 @@ namespace Crossdocking.Services
         public Dictionary<string, int> ProductCategories { get; set; }
         public Dictionary<string, int> ProductTypes { get; set; }
 
-        public string DeliveryDate { get; set; }
-        public string DeliveryWeight { get; set; }
+
         public ExcelParserService(string filePath)
         {
             _filePath = filePath;
@@ -42,15 +41,15 @@ namespace Crossdocking.Services
                 using (var reader = ExcelReaderFactory.CreateReader(stream, excelReaderConfiguration))
                 {
                     reader.Read();
-                    DeliveryDate = reader.GetValue(0).ToString() ?? string.Empty;
-                    DeliveryWeight = reader.GetValue(1).ToString() ?? string.Empty;
+                    var date = reader.GetValue(0);
+                    var weight = reader.GetValue(1);
                     var categories = reader.GetValue(2);
                     var types = reader.GetValue(3);
                     int count = 0;
                     while (reader.Read())
                     {
-                        var date = reader.GetValue(0);
-                        var weight = reader.GetValue(1);
+                        date = reader.GetValue(0);
+                        weight = reader.GetValue(1);
                         categories = reader.GetValue(2);
                         types = reader.GetValue(3);
                         

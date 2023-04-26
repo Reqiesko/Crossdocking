@@ -43,7 +43,7 @@ namespace Crossdocking.ViewModels
                     }
                     else if (user is { Role: "admin" })
                     {
-                        _navigationService.CurrentViewModel = new AdminPageVM();
+                        _navigationService.CurrentViewModel = new AdminPageVM(_navigationService);
                     }
                     else
                     {

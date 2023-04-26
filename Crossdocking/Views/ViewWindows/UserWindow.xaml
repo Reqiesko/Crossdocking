@@ -11,6 +11,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -24,7 +25,7 @@
         <TextBox Text="{Binding Password}" Grid.Column="1" Grid.Row="1" Margin="10 0 10 0"/>
         <TextBox Text="{Binding Role}" Grid.Column="1" Grid.Row="2" Margin="10 0 10 0"/>
 
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="4" Grid.Column="1">
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
             <Button IsDefault="True" Click="Accept_Click" MinWidth="60" Margin="5">OK</Button>
             <Button IsCancel="True" MinWidth="60" Margin="5">Отмена</Button>
         </StackPanel>
