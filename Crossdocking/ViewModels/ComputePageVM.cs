@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -21,6 +22,7 @@ namespace Crossdocking.ViewModels
     {
         private readonly AppDbContext _dbContext;
         public ObservableCollection<Terminal> Terminals { get; set; }
+        public ObservableCollection<Contract> Contracts { get; set; }
         public ObservableCollection<TypeTerminal> TypeTerminals { get; set; }
 
 
@@ -38,7 +40,7 @@ namespace Crossdocking.ViewModels
         public int FastProductCount { get; set; }
         public int SlowProductCount { get; set; }
         public int DaysWithDeliveries { get; set; }
-        public double AverageThroughput { get; set; }
+        public int AverageThroughput { get; set; }
         public double Inaccuracy { get; set; }
         public bool RegularityDeliveries { get; set; }
         public int ProductCount { get; set; }
@@ -55,9 +57,11 @@ namespace Crossdocking.ViewModels
             _dbContext = new AppDbContext();
 
             _dbContext.Terminals.Load();
+            _dbContext.Contracts.Load();
             _dbContext.TypeTerminals.Load();
 
             Terminals = _dbContext.Terminals.Local.ToObservableCollection();
+            Contracts = _dbContext.Contracts.Local.ToObservableCollection();
             TypeTerminals = _dbContext.TypeTerminals.Local.ToObservableCollection();
 
             AppDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -143,6 +147,25 @@ namespace Crossdocking.ViewModels
                                     resultWindow.Show();
                                 }
                             }
+
+                            Contract contract = new Contract()
+                            {
+                                AverageThroughput = AverageThroughput,
+                                MaxCarCount = CarsCount,
+                                RegularityOfDeliveries = DaysWithDeliveries,
+                                CompanyName = CompanyName
+                            };
+                            _dbContext.Contracts.Add(contract);
+                            try
+                            {
+                                _dbContext.SaveChanges();
+                            }
+                            catch (Exception e)
+                            {
+                                _dbContext.Contracts.Remove(contract);
+                                Trace.WriteLine(e);
+                            }
+
                         }
                         else
                         {
@@ -195,7 +218,7 @@ namespace Crossdocking.ViewModels
         
         private void GetAverageThroughput()
         {
-            AverageThroughput = _excelParserService.Weight.Average();
+            AverageThroughput = Convert.ToInt32(_excelParserService.Weight.Average());
         }
 
         private void GetCategoriesProductCount()
