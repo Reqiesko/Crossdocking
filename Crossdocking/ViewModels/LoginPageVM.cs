@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -19,7 +20,9 @@ namespace Crossdocking.ViewModels
 
         private RelayCommand _loginCommand;
 
+        [Required]
         public string Username { get; set; }
+        [Required]
         public string Password { get; set; }
         public string ErrorMessage { get; set; }
 
