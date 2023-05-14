@@ -73,7 +73,6 @@ namespace Crossdocking.ViewModels
                 @"Images\H.png",
                 @"Images\U.png"
             };
-            RegularityDeliveries = true;
         }
 
 

@@ -51,24 +51,10 @@
             <Button Style="{StaticResource tabButton}" Click="ShowUsersTableCommand" Command="{Binding UserChangeAddCommand}" Content="Users"/>
         </StackPanel>
 
-        <!--Counter Title-->
-        <TextBlock Text="68 Club Staff" Grid.Row="3" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-        <TextBlock Text="Filter by" Grid.Row="3" FontSize="13" FontWeight="SemiBold" Margin="0 0 215 0" Foreground="#121518" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-
-        <!--Filter Textbox-->
-        <Grid Width="200" HorizontalAlignment="Right" Grid.Row="3">
-            <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
-                           Panel.ZIndex="1" Text="Search in Members ..."
-                           Visibility="{Binding ElementName=textBoxFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
-
-            <TextBox Name="textBoxFilter" Style="{StaticResource filterTextBox}"/>
-        </Grid>
-
         <!--Members Data Grid-->
         <!--Contracts Data Grid-->
         <DataGrid 
-            Grid.Row="4"
+            Grid.Row="3"
             RowStyle="{DynamicResource DataGridRowStyle1}"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
             CellStyle="{DynamicResource DataGridCellStyle1}"
@@ -116,7 +102,7 @@
 
         <!--Terminal Data Grid-->
         <DataGrid 
-            Grid.Row="4"
+            Grid.Row="3"
             RowStyle="{DynamicResource DataGridRowStyle1}"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
             CellStyle="{DynamicResource DataGridCellStyle1}"
@@ -164,7 +150,7 @@
 
         <!--TypeTerminal Data Grid-->
         <DataGrid 
-            Grid.Row="4"
+            Grid.Row="3"
             Visibility="Hidden"
             RowStyle="{DynamicResource DataGridRowStyle1}"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
@@ -212,7 +198,7 @@
 
         <!--User Data Grid-->
         <DataGrid 
-            Grid.Row="4"
+            Grid.Row="3"
             Visibility="Hidden"
             RowStyle="{DynamicResource DataGridRowStyle1}"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
