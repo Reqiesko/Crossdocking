@@ -67,7 +67,6 @@
             HorizontalAlignment="Left"
             MinWidth="250"
             Margin="20, 10"
-            IsReadOnly="True"
             Text="{Binding AverageThroughput}"/>
 
         <Label 
@@ -83,7 +82,6 @@
             HorizontalAlignment="Left"
             MinWidth="250"
             Margin="20, 10"
-            IsReadOnly="True"
             Text="{Binding ProductCount}"/>
 
         <Label 
@@ -99,7 +97,6 @@
             HorizontalAlignment="Left"
             MinWidth="250"
             Margin="20, 10"
-            IsReadOnly="True"
             Text="{Binding FastProductCount}"/>
 
         <Label 
@@ -115,7 +112,6 @@
             HorizontalAlignment="Left"
             MinWidth="250"
             Margin="20, 10"
-            IsReadOnly="True"
             Text="{Binding SlowProductCount}"/>
 
 
@@ -132,7 +128,6 @@
             HorizontalAlignment="Left"
             MinWidth="250"
             Margin="20, 10"
-            IsReadOnly="True"
             Text="{Binding DaysWithDeliveries}"/>
         
         
@@ -149,7 +144,6 @@
             HorizontalAlignment="Left"
             MinWidth="250"
             Margin="20, 10"
-            IsReadOnly="True"
             Text="{Binding Inaccuracy}"/>
         <Label 
             Grid.Column="0"

@@ -132,39 +132,47 @@ namespace Crossdocking.ViewModels
                     }
                     try
                     {
-                        if (_excelParserService.ProductTypes["Нескоропортящиеся"] < _excelParserService.ProductTypes["Скоропортящееся"] && IsRegularityDeliveries())
+                        if (_excelParserService.ProductTypes["Нескоропортящиеся"] < _excelParserService.ProductTypes["Скоропортящееся"])
                         {
-                            for (int i = 0; i < TypeTerminals.Count; i++)
+                            if (IsRegularityDeliveries())
                             {
-                                if (CarsCount >= TypeTerminals[i].MinGates && CarsCount <= TypeTerminals[i].MaxGates/* && ProductCount < Terminals[i].CountProduct*/)
+                                for (int i = 0; i < TypeTerminals.Count; i++)
                                 {
-                                    ResultWindow resultWindow = new ResultWindow(
-                                        Path.Combine(AppDir, RelativePathImages[i]),
-                                        Terminals[i].CountLoader,
-                                        Terminals[i].CountBelt,
-                                        Terminals[i].CountGates);
-                                    resultWindow.Show();
+                                    if (CarsCount >= TypeTerminals[i].MinGates && CarsCount <= TypeTerminals[i].MaxGates/* && ProductCount < Terminals[i].CountProduct*/)
+                                    {
+                                        ResultWindow resultWindow = new ResultWindow(
+                                            Path.Combine(AppDir, RelativePathImages[i]),
+                                            Terminals[i].CountLoader,
+                                            Terminals[i].CountBelt,
+                                            Terminals[i].CountGates);
+                                        resultWindow.Show();
+                                    }
+                                }
+
+                                Contract contract = new Contract()
+                                {
+                                    AverageThroughput = AverageThroughput,
+                                    MaxCarCount = CarsCount,
+                                    RegularityOfDeliveries = DaysWithDeliveries,
+                                    CompanyName = CompanyName
+                                };
+                                _dbContext.Contracts.Add(contract);
+                                try
+                                {
+                                    _dbContext.SaveChanges();
+                                }
+                                catch (Exception e)
+                                {
+                                    _dbContext.Contracts.Remove(contract);
+                                    Trace.WriteLine(e);
                                 }
                             }
-
-                            Contract contract = new Contract()
+                            else
                             {
-                                AverageThroughput = AverageThroughput,
-                                MaxCarCount = CarsCount,
-                                RegularityOfDeliveries = DaysWithDeliveries,
-                                CompanyName = CompanyName
-                            };
-                            _dbContext.Contracts.Add(contract);
-                            try
-                            {
-                                _dbContext.SaveChanges();
+                                MessageBox.Show("Поставки нерегулярны!\nСквозное складирование не имеет смысла!",
+                                    "Предупреждение!",
+                                    MessageBoxButton.OK);
                             }
-                            catch (Exception e)
-                            {
-                                _dbContext.Contracts.Remove(contract);
-                                Trace.WriteLine(e);
-                            }
-
                         }
                         else
                         {
@@ -185,7 +193,8 @@ namespace Crossdocking.ViewModels
 
         private bool IsRegularityDeliveries()
         {
-            double average = Convert.ToDouble(DeliveriesInDay.Values.Sum() / (double)_excelParserService.Date.Distinct().ToList().Count);
+            double average = Convert.ToDouble(DeliveriesInDay.Values.Sum() 
+                / (double)_excelParserService.Date.Distinct().ToList().Count);
             //var inaccuracy = 5;
             foreach (var day in DeliveriesInDay)
             {
